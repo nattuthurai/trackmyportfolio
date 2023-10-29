@@ -1,7 +1,29 @@
+"use client";
+
 import React from "react";
 import backgroundImage from "./Register-Background.png";
+import { useForm, SubmitHandler } from "react-hook-form";
+import axis from "axios";
+import { useRouter } from "next/navigation";
+
+interface IFormInput {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
 
 const Signup = () => {
+  const router = useRouter();
+  const { register, handleSubmit } = useForm<IFormInput>();
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    try {
+      await axis.post("/api/userdetails", data);
+      console.log(data);
+      router.push("/login");
+    } catch (error) {}
+  };
+
   return (
     <div
       className="min-h-screen py-2"
@@ -32,17 +54,19 @@ const Signup = () => {
             <p className="mb-4">
               Create your account. It’s free and only take a minute
             </p>
-            <form action="#">
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-5">
                 <input
                   type="text"
                   placeholder="Firstname"
                   className="border border-gray-400 py-1 px-2"
+                  {...register("firstName", { required: true, maxLength: 255 })}
                 />
                 <input
                   type="text"
                   placeholder="Lastname"
                   className="border border-gray-400 py-1 px-2"
+                  {...register("lastName", { required: true, maxLength: 255 })}
                 />
               </div>
               <div className="mt-5">
@@ -50,6 +74,7 @@ const Signup = () => {
                   type="text"
                   placeholder="Email"
                   className="border border-gray-400 py-1 px-2 w-full"
+                  {...register("email", { required: true, maxLength: 255 })}
                 />
               </div>
               <div className="mt-5">
@@ -57,6 +82,7 @@ const Signup = () => {
                   type="password"
                   placeholder="Password"
                   className="border border-gray-400 py-1 px-2 w-full"
+                  {...register("password", { required: true, maxLength: 255 })}
                 />
               </div>
               <div className="mt-5">
@@ -80,7 +106,10 @@ const Signup = () => {
                 </span>
               </div>
               <div className="mt-5">
-                <button className="w-full bg-purple-500 py-3 text-center text-white">
+                <button
+                  className="w-full bg-purple-500 py-3 text-center text-white"
+                  type="submit"
+                >
                   Register Now
                 </button>
               </div>
