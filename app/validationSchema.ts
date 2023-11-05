@@ -5,4 +5,5 @@ export const createUserDetailsSchema=z.object({
     lastName: z.string().min(1, 'Last name is required').max(255),
     email: z.string().min(1, 'Email is required').max(255),
     password: z.string().min(1, 'Password is required').max(255),
+    userName: z.string().min(1, 'UserName is required').max(255),
 });

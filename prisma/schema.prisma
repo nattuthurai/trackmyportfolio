@@ -14,8 +14,15 @@ model UserDetails {
   id        Int      @id @default(autoincrement())
   firstName String   @db.VarChar(255)
   lastName  String   @db.VarChar(255)
+  userName  String   @db.VarChar(255)
   email     String   @db.VarChar(255)
   password  String   @db.VarChar(255)
+  isVerfied Boolean  @default(false)
+  isAdmin   Boolean  @default(false)
+  //forgotPasswordToken       String   @db.VarChar(255)
+  //forgotPasswordTokenExpiry DateTime @db.DateTime()
+  //verifyToken               String   @db.VarChar(255)
+  //verifyTokenExpiry         DateTime @db.DateTime()
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
