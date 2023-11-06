@@ -2,7 +2,7 @@
 
 import React from "react";
 //import backgroundImage from "./Register-Background.png";
-import axis from "axios";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
@@ -19,7 +19,7 @@ const Signup = () => {
 
   const onSignup = async () => {
     try {
-      const response = await axis.post("/api/signup", user);
+      const response = await axios.post("/api/signup", user);
       console.log("signup success:" + response.data);
       router.push("/login");
     } catch (error: any) {

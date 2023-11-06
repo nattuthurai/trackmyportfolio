@@ -1,5 +1,10 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 import {
   FaFacebookF,
@@ -10,7 +15,24 @@ import {
 
 import { MdLockOutline } from "react-icons/md";
 
-const Login = () => {
+const LoginPage = () => {
+  const router = useRouter();
+
+  const [user, setUser] = useState({ email: "", password: "" });
+
+  const OnLogin = async () => {
+    try {
+      console.log("selected");
+      const response = await axios.post("/api/login", user);
+      console.log("Login Success:" + response.data);
+      toast.success("Login success");
+    } catch (error: any) {
+      console.log("Login failed:" + error.message);
+      toast.error(error.message);
+    } finally {
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-2 bg-gray-100">
       <main className="flex flex-col items-center justify-center w-full px-20 text-center">
@@ -54,6 +76,10 @@ const Login = () => {
                     name="email"
                     placeholder="Email"
                     className="bg-gray-100 outline-none text-sm flex-1"
+                    value={user.email}
+                    onChange={(e) =>
+                      setUser({ ...user, email: e.target.value })
+                    }
                   />
                 </div>
                 <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
@@ -63,6 +89,10 @@ const Login = () => {
                     name="password"
                     placeholder="Password"
                     className="bg-gray-100 outline-none text-sm flex-1"
+                    value={user.password}
+                    onChange={(e) =>
+                      setUser({ ...user, password: e.target.value })
+                    }
                   />
                 </div>
                 <div className="flex justify-between w-64 mb-5">
@@ -79,12 +109,14 @@ const Login = () => {
                     Forgot Password?
                   </a>
                 </div>
-                <a
-                  href="#"
+
+                <button
+                  type="button"
+                  onClick={OnLogin}
                   className="border-2 border-green-200 rounded-full px-12 py-2 inline-block font-semibold hover:bg-green-500 hover:text-white"
                 >
                   Sign In
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -98,6 +130,7 @@ const Login = () => {
             <a
               href="#"
               className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-green-500"
+              onClick={OnLogin}
             >
               <Link href="/signup">Sign Up</Link>
             </a>
@@ -108,4 +141,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
