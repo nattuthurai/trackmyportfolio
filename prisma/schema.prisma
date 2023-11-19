@@ -26,3 +26,18 @@ model UserDetails {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model StockDetails {
+  id              Int      @id @default(autoincrement())
+  stockName       String   @db.VarChar(255)
+  stockPrice      String   @db.VarChar(10)
+  dayHigh         String   @db.VarChar(10)
+  dayLow          String   @db.VarChar(10)
+  yearHigh        String   @db.VarChar(10)
+  yearLow         String   @db.VarChar(10)
+  peRatio         String   @db.VarChar(10)
+  earningPerShare String   @db.VarChar(10)
+  stockStatus     String   @db.VarChar(255)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
