@@ -29,6 +29,6 @@ export async function POST(request:NextRequest){
             password:hashedPassword,
         },
      })
-    return NextResponse.json(newUserDetails,{status:201});
+    return      
 }
 

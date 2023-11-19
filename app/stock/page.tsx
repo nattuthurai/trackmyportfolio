@@ -17,6 +17,15 @@ const Stock = () => {
     stockStatus: "",
   });
 
+  const onSubmitShares = async () => {
+    try {
+      const response = await axios.post("/api/stock", shares);
+      console.log("Submit success!" + response.data);
+    } catch (error: any) {
+      console.log("error while submitting data!" + error.message);
+    }
+  };
+
   return (
     <>
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
@@ -34,8 +43,8 @@ const Stock = () => {
               </label>
               <input
                 type="text"
-                name="name"
-                id="name"
+                name="stockName"
+                id="stockName"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Type Stock Name"
                 value={shares.stockName}
@@ -53,8 +62,8 @@ const Stock = () => {
               </label>
               <input
                 type="text"
-                name="brand"
-                id="brand"
+                name="stockPrice"
+                id="stockPrice"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Stock Price"
                 value={shares.stockPrice}
@@ -71,7 +80,11 @@ const Stock = () => {
                 Stock Status
               </label>
               <select
-                id="category"
+                id="stockStatus"
+                value={shares.stockStatus}
+                onChange={(e) => {
+                  setShares({ ...shares, stockStatus: e.target.value });
+                }}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               >
                 <option selected="">Select Status</option>
@@ -90,8 +103,8 @@ const Stock = () => {
               </label>
               <input
                 type="number"
-                name="price"
-                id="price"
+                name="dayHigh"
+                id="dayHigh"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="$99"
                 value={shares.dayHigh}
@@ -109,8 +122,8 @@ const Stock = () => {
               </label>
               <input
                 type="number"
-                name="item-weight"
-                id="item-weight"
+                name="dayLow"
+                id="dayLow"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="$9"
                 value={shares.dayLow}
@@ -129,8 +142,8 @@ const Stock = () => {
               </label>
               <input
                 type="number"
-                name="price"
-                id="price"
+                name="yearHigh"
+                id="yearHigh"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="$9999"
                 value={shares.yearHigh}
@@ -148,8 +161,8 @@ const Stock = () => {
               </label>
               <input
                 type="number"
-                name="item-weight"
-                id="item-weight"
+                name="yearLow"
+                id="yearLow"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="$999"
                 value={shares.yearLow}
@@ -167,8 +180,8 @@ const Stock = () => {
               </label>
               <input
                 type="number"
-                name="price"
-                id="price"
+                name="peRatio"
+                id="peRatio"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="9"
                 value={shares.peRatio}
@@ -186,8 +199,8 @@ const Stock = () => {
               </label>
               <input
                 type="number"
-                name="item-weight"
-                id="item-weight"
+                name="earningPerShare"
+                id="earningPerShare"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="$99"
                 value={shares.earningPerShare}
@@ -200,6 +213,7 @@ const Stock = () => {
             <div className="sm:col-span-2">
               <button
                 type="submit"
+                onClick={onSubmitShares}
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Add Stock
